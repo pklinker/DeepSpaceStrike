@@ -61,6 +61,7 @@ crashlytics-build.properties
 
 Assets/epyphany/*
 Assets/F3_Corvette/*
+Assets/Plugins/*
 Assets/SF_Fighter/*
 Assets/SkyBox**
 Assets/Space Bomber/*

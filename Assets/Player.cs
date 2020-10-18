@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public float maxXRange = 6f;
+
+    // Speed in meters per second.
+    [Tooltip("in ms^-1")][SerializeField] float xSpeed = 12f;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +18,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         float horizontalThrow = Input.GetAxis("Horizontal");
-        print("Horizontal Throw = " + horizontalThrow);
+        float xOffset = Time.deltaTime * horizontalThrow * xSpeed;
+        float rawNewXPosition = xOffset + transform.localPosition.x;
+        rawNewXPosition = Mathf.Clamp(rawNewXPosition, -maxXRange, maxXRange);
+//        print("X offset = " + xOffset);
+        transform.localPosition = new Vector3(rawNewXPosition, transform.localPosition.y, transform.localPosition.z);
 
     }
 }
