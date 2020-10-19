@@ -8,10 +8,10 @@ using UnityEngine;
  */
 public class Player : MonoBehaviour
 {
-    public float maxXRange = 6f;
-    public float maxYRange = 4.6f;
-    public float minYRange = -4.3f;
-
+    public float maxXRange = 17f;
+    public float maxYRange = 9.5f;
+    public float minYRange = -9.5f;
+   
 
     // X-axis speed in meters per second.
     [Tooltip("in ms^-1")][SerializeField] float xSpeed = 17f;
@@ -19,11 +19,11 @@ public class Player : MonoBehaviour
     // Y-axis speed in meters per second.
     [Tooltip("in ms^-1")] [SerializeField] float ySpeed = 17f;
 
-    [Tooltip("in ms^-1")] [SerializeField] float positionPitchFactor = -5f;
-    [Tooltip("in ms^-1")] [SerializeField] float controlPitchFactor = -18f;
-    [Tooltip("in ms^-1")] [SerializeField] float positionYawFactor = 4f;
-    [Tooltip("in ms^-1")] [SerializeField] float controlRollFactor = -20f;
-
+    [SerializeField] float positionPitchFactor = -1.38;
+    [SerializeField] float controlPitchFactor = -18f;
+    [SerializeField] float positionYawFactor = 2.44f;
+    [SerializeField] float controlRollFactor = -30f;
+    [SerializeField] bool invertY = true;
 
     float horizontalThrow;
     float verticalThrow;
@@ -63,6 +63,10 @@ public class Player : MonoBehaviour
     private float getYPosition()
     {
         verticalThrow = Input.GetAxis("Vertical");
+        if (invertY)
+        {
+            verticalThrow = -verticalThrow;
+        }
         float yOffset = Time.deltaTime * verticalThrow * ySpeed;
         float rawNewYPosition = yOffset + transform.localPosition.y;
         rawNewYPosition = Mathf.Clamp(rawNewYPosition, minYRange, maxYRange);
