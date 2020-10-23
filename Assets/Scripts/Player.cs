@@ -39,8 +39,12 @@ public class Player : MonoBehaviour
         transform.localPosition = new Vector3(getXPosition(), getYPosition(), transform.localPosition.z);
         processRotation();
     }
-    
-    private void processRotation()
+ 
+    //When the Primitive exits the collision, it will change Color
+    private void OnTriggerExit(Collider other)
+    {
+    }
+        private void processRotation()
     {
         float pitchDueToPosition = transform.localPosition.y * positionPitchFactor;
         float pitchDueToControl = verticalThrow * controlPitchFactor;

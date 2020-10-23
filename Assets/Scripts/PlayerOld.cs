@@ -6,7 +6,7 @@ using UnityEngine;
  * Y then X for local rotation is easiest
  * 
  */
-public class Player : MonoBehaviour
+public class PlayerOld : MonoBehaviour
 {
     public float maxXRange = 17f;
     public float maxYRange = 9.5f;
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     // Y-axis speed in meters per second.
     [Tooltip("in ms^-1")] [SerializeField] float ySpeed = 17f;
 
-    [SerializeField] float positionPitchFactor = -1.38;
+    [SerializeField] float positionPitchFactor = -1.38f;
     [SerializeField] float controlPitchFactor = -18f;
     [SerializeField] float positionYawFactor = 2.44f;
     [SerializeField] float controlRollFactor = -30f;
