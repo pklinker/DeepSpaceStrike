@@ -1,32 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 /**
  * Y then X for local rotation is easiest
  * 
  */
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    public float maxXRange = 17f;
-    public float maxYRange = 9.5f;
-    public float minYRange = -9.5f;
-   
 
+    [Header("General")]
+    [Tooltip("in m")] [SerializeField] float maxXRange = 17f;
+    [Tooltip("in m")] [SerializeField] float maxYRange = 9.5f;
+    [Tooltip("in m")] [SerializeField] float minYRange = -9.5f;
     // X-axis speed in meters per second.
-    [Tooltip("in ms^-1")][SerializeField] float xSpeed = 17f;
-
+    [Tooltip("in ms^-1")] [SerializeField] float xSpeed = 17f;
     // Y-axis speed in meters per second.
     [Tooltip("in ms^-1")] [SerializeField] float ySpeed = 17f;
-
-    [SerializeField] float positionPitchFactor = -2.66f;
-    [SerializeField] float controlPitchFactor = -18f;
+    [Header("Screen-position Based")]
     [SerializeField] float positionYawFactor = 2.44f;
+    [SerializeField] float positionPitchFactor = -2.66f;
+
+    [Header("Control-throw Based")]
+    [SerializeField] float controlPitchFactor = -18f;
     [SerializeField] float controlRollFactor = -30f;
+
+    [Header("Controls")]
     [SerializeField] bool invertY = true;
 
-    float horizontalThrow;
-    float verticalThrow;
+    [Header("Effects")]
+    [Tooltip("In seconds")] [SerializeField] float loadLevelDelay = 1f;
+    [Tooltip("animation and sound")][SerializeField] GameObject deathFX;
+
+
+    private float horizontalThrow;
+    private float verticalThrow;
+    private bool isControllEnabled = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +48,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition = new Vector3(getXPosition(), getYPosition(), transform.localPosition.z);
-        processRotation();
+        if (isControllEnabled)
+        {
+            transform.localPosition = new Vector3(getXPosition(), getYPosition(), transform.localPosition.z);
+            processRotation();
+        }
     }
- 
+    public void CollisionOccurred()  // string referenced
+    {
+        isControllEnabled = false;
+        deathFX.SetActive(true);
+        Invoke("LoadDyingScene", loadLevelDelay);
+    }
+
     //When the Primitive exits the collision, it will change Color
     private void OnTriggerExit(Collider other)
     {
@@ -77,4 +98,10 @@ public class Player : MonoBehaviour
         return rawNewYPosition;
     }
 
+    private void LoadDyingScene() // string referenced
+    {
+        isControllEnabled = true;
+        SceneManager.LoadScene(1);
+        
+    }
 }

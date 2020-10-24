@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float levelLoadDelay = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +21,16 @@ public class CollisionHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print("player collided with something.");
 
     }
     private void OnTriggerEnter(Collider other)
     {
-        print("player triggered with something.");
+        RegisterCollision();
+    }
+    private void RegisterCollision()
+    {
+        
+        SendMessage("CollisionOccurred");
     }
 
 }
