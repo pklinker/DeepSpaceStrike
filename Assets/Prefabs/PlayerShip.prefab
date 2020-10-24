@@ -139,6 +139,8 @@ MonoBehaviour:
   controlPitchFactor: -18
   controlRollFactor: -30
   invertY: 1
+  loadLevelDelay: 1
+  deathFX: {fileID: 2862102576890220618}
 --- !u!114 &1056594630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +164,18 @@ PrefabInstance:
     - target: {fileID: 3668149827683856570, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
       propertyPath: m_Name
       value: Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668149827683856570, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668149827683856571, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
+      propertyPath: m_Volume
+      value: 0.542
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668149827683856573, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3668149827683856574, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -221,6 +235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
+--- !u!1 &2862102576890220618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3668149827683856570, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
+  m_PrefabInstance: {fileID: 1540189240791671024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2862102576890220622 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3668149827683856574, guid: d24ae4def13f53342bcba7d4268d7aa3, type: 3}
