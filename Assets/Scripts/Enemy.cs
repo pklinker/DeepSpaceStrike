@@ -13,11 +13,13 @@ public class Enemy : MonoBehaviour
     [Header("Effects")]
     [SerializeField] AudioClip deathExplosionAC;
     [SerializeField] GameObject deathExplosion;
+    [SerializeField] Transform parent;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+       
         AddNonTriggerBoxCollider();
         isDead = false;
     }
@@ -34,7 +36,8 @@ public class Enemy : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         isDead = true;
-        Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        GameObject fx = Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        fx.transform.parent = parent;
         //        print("Particles collided with enemy " + gameObject.name);
         Destroy(gameObject);
 
