@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
  */
 public class PlayerController : MonoBehaviour
 {
+    [Header("Equipment")]
+    [SerializeField] GameObject[] guns;
 
     [Header("General")]
     [Tooltip("in m")] [SerializeField] float maxXRange = 17f;
@@ -34,15 +36,19 @@ public class PlayerController : MonoBehaviour
     [Tooltip("In seconds")] [SerializeField] float loadLevelDelay = 1f;
     [Tooltip("animation and sound")][SerializeField] GameObject deathFX;
 
+    [Tooltip("In seconds")] [SerializeField] float TimeScoreDelay = 10f;
+    [Tooltip("In seconds")] [SerializeField] int TimeScore = 10;
 
     private float horizontalThrow;
     private float verticalThrow;
     private bool isControllEnabled = true;
-
+    ScoreBoard scoreBoard;
 
     // Start is called before the first frame update
     void Start()
     {
+        scoreBoard = FindObjectOfType<ScoreBoard>();
+        Invoke("AddTimeScore", TimeScoreDelay);
     }
 
     // Update is called once per frame
@@ -51,7 +57,8 @@ public class PlayerController : MonoBehaviour
         if (isControllEnabled)
         {
             transform.localPosition = new Vector3(getXPosition(), getYPosition(), transform.localPosition.z);
-            processRotation();
+            ProcessRotation();
+            ProcessFiring();
         }
     }
     public void CollisionOccurred()  // string referenced
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
     }
-        private void processRotation()
+    private void ProcessRotation()
     {
         float pitchDueToPosition = transform.localPosition.y * positionPitchFactor;
         float pitchDueToControl = verticalThrow * controlPitchFactor;
@@ -75,6 +82,23 @@ public class PlayerController : MonoBehaviour
         float roll = controlRollFactor * horizontalThrow;
 
         transform.localRotation = Quaternion.Euler(pitch,yaw,roll);
+    }
+    private void ProcessFiring()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            foreach (GameObject gun in guns)
+            {
+                gun.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject gun in guns)
+            {
+                gun.SetActive(false);
+            }
+        }
     }
     private float getXPosition()
     {
@@ -103,5 +127,11 @@ public class PlayerController : MonoBehaviour
         isControllEnabled = true;
         SceneManager.LoadScene(1);
         
+    }
+
+    private void AddTimeScore()
+    {
+        scoreBoard.ScoreHit(TimeScore);
+        Invoke("AddTimeScore", TimeScoreDelay);
     }
 }
